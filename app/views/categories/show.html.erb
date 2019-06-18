@@ -11,8 +11,6 @@
 <%= form_with(model: [@category, @product], local: true) do |form| %>
 <%= form.hidden_field :category_id, value: @category.id %>
 
-<%= @product.errors.full_messages %>
-
 <div class="field">
   <%= form.label :name %>
   <%= form.text_field :name %>
