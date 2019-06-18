@@ -1,9 +1,53 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
+<h2>
+  <strong>Categoría:</strong>
   <%= @category.name %>
-</p>
+</h2>
 
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>
+
+<%= form_with(model: [@category, @product], local: true) do |form| %>
+<%= form.hidden_field :category_id, value: @category.id %>
+
+<%= @product.errors.full_messages %>
+
+<div class="field">
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+</div>
+
+<div class="field">
+  <%= form.label :price %>
+  <%= form.number_field :price %>
+</div>
+
+<div class="actions">
+  <%= form.submit %>
+</div>
+<% end %>
+
+<div class="table-responsive-md">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Precio</th>
+        <th scope="col">¿Eliminar?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <% @category.products.each do |product| %>
+        <th scope="row"><%= product.id %></th>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td><%= link_to "Sí", category_product_path(@category, product),
+        method: :delete %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
